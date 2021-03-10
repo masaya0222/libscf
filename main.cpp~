@@ -1,0 +1,107 @@
+#include "src/test.hpp"
+#include "src/molecule.hpp"
+#include "src/iwl.hpp"
+#include "src/basisset.hpp"
+#include "src/hf.hpp"
+#include <libint2.hpp>
+
+#include <Eigen/Dense>
+#include <Eigen/Eigenvalues>
+
+
+int main() {
+    hello_world_func();
+    std::shared_ptr<scf::Molecule> mol_ptr = scf::get_molecule_from_xyz("c6h12", "sto-3g");
+    
+    // // libint2::initialize();
+    scf::HF hf(mol_ptr);
+    std::cout << hf.iwl_buf.fd() << std::endl;
+    hf.init();
+    hf.compute();
+    // scf::IWL iwl;
+    // iwl.init_write();
+
+    // using libint2::Shell;
+    // using libint2::Engine;
+    // using libint2::Operator;
+
+    // Engine engine(Operator::coulomb, max_nprim(mol_ptr->shells), max_l(mol_ptr->shells), 0);
+    
+    // std::vector<size_t> shell2bf = map_shell_to_basis_function(mol_ptr->shells);
+
+
+
+    // const auto& buf = engine.results();
+    // auto shells = mol_ptr->shells;
+    // scf::IntegralIterator iter(shells);
+    
+    // for(iter.first(); !iter.done; iter.next()) {
+    //     std::cout << "i " << iter.current.i << " j " << iter.current.j << " k " << iter.current.k << " l " << iter.current.l << std::endl;
+    // }
+    // std::cout << "hello" << std::endl;
+    
+    // int count = 0;
+    // for (auto s1=0; s1!=shells.size(); ++s1) {
+    //     auto bf1_first = shell2bf[s1];
+    //     auto n1 = shells[s1].size();
+    //     for (auto s2=0; s2<=s1; ++s2) {
+    //         auto bf2_first = shell2bf[s2];
+    //         auto n2 = shells[s2].size();
+    //         for (auto s3=0; s3<=s1; ++s3) {
+    //             auto bf3_first = shell2bf[s3];
+    //             auto n3 = shells[s3].size();
+
+    //             const auto s4_max = (s1 == s3) ? s2 : s3;
+    //             for (auto s4=0; s4<=s4_max; ++s4) {
+    //                 auto bf4_first = shell2bf[s4];
+    //                 auto n4 = shells[s4].size();
+    //                 count++;
+    //                 engine.compute(shells[s1], shells[s2], shells[s3], shells[s4]);
+
+    //                 const auto* buf_1234 = buf[0];
+    //                 if (buf_1234 == nullptr)
+    //                     continue;
+    //                 iwl.write(bf1_first, bf2_first, bf3_first, bf4_first, n1, n2, n3, n4, (double*)buf_1234);
+    //             }
+    //         }
+    //     }
+    // }
+    // iwl.flush(1);
+    
+    // libint2::finalize();
+
+    // scf::IWL iwl;
+    // iwl.init_read();
+    // iwl.fetch();
+    // int idx;
+    // int idx_ = iwl.index();
+    // short int p, q, r, s;
+    // double value;
+    // short int* lblptr = iwl.labels();
+    // double* valptr = iwl.values();
+
+    // int count = 0;
+    // bool first = false;
+    // while(count < 2980) {
+    //     idx = 4 * idx_;
+    //     p = lblptr[idx++];
+    //     q = lblptr[idx++];
+    //     r = lblptr[idx++];
+    //     s = lblptr[idx++];
+        
+    //     value = valptr[idx_];
+    //     if (p == 0 && q == 0 && r == 0 && s == 0 && first)
+    //         break;
+    //     else
+    //         first = true;
+    //     std::cout << "p " << p << " q " << q << " r " << r << " s " << s << " value "  << value << std::endl;
+    //     idx_++;
+    //     count++;
+    // }
+    // std::cout << "count " << count << std::endl;
+}
+
+
+
+
+
